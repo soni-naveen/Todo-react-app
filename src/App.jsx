@@ -16,7 +16,7 @@ function App() {
   };
 
   const addListItem = () => {
-    if (!inputList) {
+    if (!inputList || inputList.trim() === "") {
       alert("Please write something!");
       return;
     }
