@@ -44,7 +44,7 @@ function App() {
 
   return (
     <div className="box flex flex-col justify-center items-center pt-24 w-screen lg:pl-60">
-      <div className="heading font-bold mb-4 mobile:text-black rounded-lg p-3 drop-shadow-2xl text-xl">
+      <div className="heading font-bold mb-4 text-cyan-100 contrast-200 rounded-lg p-3 shadow-white text-4xl">
         TODO LIST
       </div>
       <div className="inputfield flex item-center">
@@ -63,7 +63,7 @@ function App() {
           <i className="fa-solid fa-plus"></i>
         </button>
       </div>
-      <div className="subHeading text-gray-500 mt-4 font-bold">Your Todos</div>
+      <div className="subHeading text-white mt-4 font-bold">Your Todos</div>
       <div className="listContainer">
         <ol>
           {items.map((itemval, index) => (

@@ -10,8 +10,8 @@ const TodoList = ({ id, text, onSelect, editTask }) => {
 
   return (
     <>
-      <div className="todo_items mt-4 w-[19rem] flex w-[19rem] mobile:w-[27rem] bg-cyan-100 mobile:pr-3 pr-2 mb-4">
-        <div className="liItem mobile:w-4/5 w-3/4 rounded-sm p-3">
+      <div className="todo_items rounded-md flex justify-between w-[19rem] my-4 px-4 mobile:w-[27rem] bg-cyan-100">
+        <div className="liItem flex items-center ">
           <li
             className="hover:cursor-pointer"
             style={{
@@ -23,12 +23,12 @@ const TodoList = ({ id, text, onSelect, editTask }) => {
             {text}
           </li>
         </div>
-        <div className="editDelete flex">
+        <div className="editDelete flex items-center p-3 gap-5">
           <button onClick={() => editTask(id)}>
-            <i className="fa-solid fa-pen-to-square text-blue-500 p-4 hover:cursor-pointer hover:scale-[1.2] transition-all ease-in duration-200" />
+            <i className="fa-solid fa-pen-to-square text-blue-500 hover:cursor-pointer hover:scale-[1.2] transition-all ease-in duration-200" />
           </button>
           <button onClick={() => onSelect(id)}>
-            <i className="fa-solid fa-trash text-red-500 p-4 hover:cursor-pointer hover:scale-[1.2] transition-all ease-in duration-200" />
+            <i className="fa-solid fa-trash text-red-500 hover:cursor-pointer hover:scale-[1.2] transition-all ease-in duration-200" />
           </button>
         </div>
       </div>

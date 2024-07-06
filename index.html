@@ -9,10 +9,13 @@
       crossorigin="anonymous"
     ></script>
     <title>Todo List</title>
-    <link rel="stylesheet" href="./src/App.css">
+    <link rel="stylesheet" href="./src/App.css" />
   </head>
   <body class="bg-todo-background bg-no-repeat bg-cover min-h-screen">
-    <div id="root"></div>
+    <div class="absolute inset-0 bg-black opacity-50"></div>
+    <div class="relative z-10">
+      <div id="root"></div>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
