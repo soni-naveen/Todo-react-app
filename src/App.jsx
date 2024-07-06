@@ -4,90 +4,81 @@ import "./App.css";
 
 const getLocalItems = () => {
   const list = localStorage.getItem("lists");
-  if (list) {
-    return JSON.parse(list);
-  } else {
-    return [];
-  }
+  return list ? JSON.parse(list) : [];
 };
 
 function App() {
   const [inputList, setInputList] = useState("");
-  const [Items, setItems] = useState(getLocalItems());
+  const [items, setItems] = useState(getLocalItems());
 
-  const items = (event) => {
+  const handleInputChange = (event) => {
     setInputList(event.target.value);
   };
 
-  useEffect(() => {
-    localStorage.setItem("lists", JSON.stringify(Items));
-  }, [Items]);
-
-  const listOfItems = () => {
+  const addListItem = () => {
     if (!inputList) {
       alert("Please write something!");
-    } else {
-      setItems((oldItems) => {
-        return [...oldItems, inputList];
-      });
-      setInputList("");
+      return;
     }
+
+    setItems((prevItems) => [...prevItems, inputList]);
+    setInputList("");
   };
-  const deleteItems = (idx) => {
-    console.log("deleted");
-    setItems((oldItems) => {
-      return oldItems.filter((arrElement, index) => {
-        return index !== idx;
-      });
-    });
+
+  const deleteListItem = (idx) => {
+    setItems((prevItems) => prevItems.filter((_, index) => index !== idx));
   };
-  const EditingItems = (idx) => {
-    console.log("Will Edit");
-    const updatedTask = prompt("Edit Your Todo", Items[idx]);
-    if (updatedTask) {
-      const updatedTasks = [...Items];
+
+  const editListItem = (idx) => {
+    const updatedTask = prompt("Edit Your Todo", items[idx]);
+    if (updatedTask !== null) {
+      const updatedTasks = [...items];
       updatedTasks[idx] = updatedTask;
       setItems(updatedTasks);
     }
   };
 
+  useEffect(() => {
+    localStorage.setItem("lists", JSON.stringify(items));
+  }, [items]);
+
   return (
-    <>
-      <div>
-        <div className="box flex flex-col justify-center items-center pt-24 w-screen lg:pl-60">
-          <div className="heading font-bold mb-4 mobile:text-black bg-orange-400 rounded-lg p-3 drop-shadow-md text-xl">ToDo List</div>
-          <div className="inputfield">
-            <input
-              className="outline-none p-4 mobile:w-96 w-64 rounded-l-lg"
-              type="text"
-              placeholder="Add a new Task"
-              name="input"
-              onChange={items}
-              value={inputList} 
-            />
-            <button onClick={listOfItems}>
-              <i className="fa-solid fa-plus p-5 font-bold rounded-r-lg bg-orange-300 hover:bg-green-400 hover:transition-all ease-in-out duration-300"></i>
-            </button>
-          </div>
-          <div className="subHeading mt-4 font-bold">Your ToDo's</div>
-          <div className="listContainer">
-            <ol>
-              {Items.map((itemval, index) => {
-                return (
-                  <TodoList
-                    key={index}
-                    id={index}
-                    text={itemval}
-                    onSelect={deleteItems}
-                    editTask={EditingItems}
-                  />
-                );
-              })}
-            </ol>
-          </div>
-        </div>
+    <div className="box flex flex-col justify-center items-center pt-24 w-screen lg:pl-60">
+      <div className="heading font-bold mb-4 mobile:text-black rounded-lg p-3 drop-shadow-2xl text-xl">
+        TODO LIST
       </div>
-    </>
+      <div className="inputfield flex item-center">
+        <input
+          className="outline-none p-4 mobile:w-96 w-64 rounded-l-md"
+          type="text"
+          placeholder="Add a new Task"
+          name="input"
+          onChange={handleInputChange}
+          value={inputList}
+        />
+        <button
+          className="px-5 font-bold rounded-r-md bg-orange-300 active:bg-green-400 hover:transition-all ease-in-out duration-300"
+          onClick={addListItem}
+        >
+          <i className="fa-solid fa-plus"></i>
+        </button>
+      </div>
+      <div className="subHeading text-gray-500 mt-4 font-bold">Your Todos</div>
+      <div className="listContainer">
+        <ol>
+          {items.map((itemval, index) => (
+            <TodoList
+              key={index}
+              id={index}
+              text={itemval}
+              onSelect={() => deleteListItem(index)}
+              editTask={() => editListItem(index)}
+            />
+          ))}
+        </ol>
+      </div>
+    </div>
   );
 }
+
 export default App;
